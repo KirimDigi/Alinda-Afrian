@@ -84,6 +84,26 @@
     class="rank-math-schema">{"@context":"https://schema.org","@graph":[{"@type":["Person","Organization"],"@id":"https://invitimo.my.id/#person","name":"Digital Wedding Invitation"},{"@type":"WebSite","@id":"https://invitimo.my.id/#website","url":"https://invitimo.my.id","name":"Digital Wedding Invitation","publisher":{"@id":"https://invitimo.my.id/#person"},"inLanguage":"id"},{"@type":"ImageObject","@id":"https://invitimo.my.id/motion-02/20.jpeg","url":"https://invitimo.my.id/motion-02/20.jpeg","width":"720","height":"1080","inLanguage":"id"},{"@type":"WebPage","@id":"https://invitimo.my.id/motion-02/#webpage","url":"https://invitimo.my.id/motion-02/","name":"The Wedding Of Linda &amp; Iyan","datePublished":"2024-08-21T19:35:51+07:00","dateModified":"2025-12-04T10:17:00+07:00","isPartOf":{"@id":"https://invitimo.my.id/#website"},"primaryImageOfPage":{"@id":"https://invitimo.my.id/motion-02/20.jpeg"},"inLanguage":"id"},{"@type":"Person","@id":"https://invitimo.my.id/author/kekondangan/","name":"kekondangan","url":"https://invitimo.my.id/author/kekondangan/","image":{"@type":"ImageObject","@id":"https://secure.gravatar.com/avatar/d28f060878f04974fcd244a24bc69911?s=96&amp;d=mm&amp;r=g","url":"https://secure.gravatar.com/avatar/d28f060878f04974fcd244a24bc69911?s=96&amp;d=mm&amp;r=g","caption":"kekondangan","inLanguage":"id"},"sameAs":["http://hi.kekondangan.id"]},{"@type":"BlogPosting","headline":"The Wedding Of Linda &amp; Iyan","datePublished":"2024-08-21T19:35:51+07:00","dateModified":"2025-12-04T10:17:00+07:00","articleSection":"Undangan Pernikahan","author":{"@id":"https://invitimo.my.id/author/kekondangan/","name":"kekondangan"},"publisher":{"@id":"https://invitimo.my.id/#person"},"description":"Nama Tamu, hadiri acara pernikahan Linda &amp; Iyan. pada hari Minggu. 8 Agustus 2026 Ya!","name":"The Wedding Of Linda &amp; Iyan","@id":"https://invitimo.my.id/motion-02/#richSnippet","isPartOf":{"@id":"https://invitimo.my.id/motion-02/#webpage"},"image":{"@id":"https://invitimo.my.id/motion-02/20.jpeg"},"inLanguage":"id","mainEntityOfPage":{"@id":"https://invitimo.my.id/motion-02/#webpage"}}]}</script>
   <!-- /Plugin WordPress Rank Math SEO -->
 
+  <script>
+    function getGuestName() {
+      var hash = window.location.hash;
+      if (hash && hash.indexOf('to=') !== -1) {
+        var match = hash.match(/to=([^&]+)/);
+        if (match && match[1]) {
+          return decodeURIComponent(match[1].replace(/\+/g, ' '));
+        }
+      }
+      var search = window.location.search;
+      if (search && search.indexOf('to=') !== -1) {
+        var match = search.match(/to=([^&]+)/);
+        if (match && match[1]) {
+          return decodeURIComponent(match[1].replace(/\+/g, ' '));
+        }
+      }
+      return null;
+    }
+  </script>
+
   <link rel='dns-prefetch' href='//hi.kekondangan.id'>
   <script>
     window._wpemojiSettings = { "baseUrl": "https:\/\/s.w.org\/images\/core\/emoji\/15.0.3\/72x72\/", "ext": ".png", "svgUrl": "https:\/\/s.w.org\/images\/core\/emoji\/15.0.3\/svg\/", "svgExt": ".svg", "source": { "concatemoji": "https:\/\/invitimo.my.id\/wp-includes\/js\/wp-emoji-release.min.js?ver=6.7.5" } };
@@ -5352,7 +5372,7 @@
                             width: 150,
                             height: 150,
                             type: "svg",
-                            data: "Nama Tamu",
+                            data: (typeof getGuestName === "function" ? getGuestName() : "") || "Nama Tamu",
                             image: "",
                             qrOptions: {
                               errorCorrectionLevel: "Q"
@@ -5967,6 +5987,32 @@
 
       return false;
     }
+  </script>
+
+  <script>
+    // Dapatkan Nama Tamu secara dinamis dari URL (Query ?to= atau Hash #to=) dan update di halaman
+    jQuery(document).ready(function($) {
+      function updateGuestName() {
+        if (typeof getGuestName !== "function") return;
+        var guestName = getGuestName();
+        if (guestName) {
+          // 1. Update nama tamu di section utama
+          $('.namatamu h2, .namatamu .elementor-heading-title').text(guestName);
+
+          // 2. Update nama tamu di check-in cover page popup
+          $('.elementor-element-e74060e h2, .elementor-element-e74060e .elementor-heading-title').text(guestName);
+
+          // 3. Update value input RSVP nama anda
+          $('input#author').val(guestName);
+        }
+      }
+
+      // Jalankan langsung setelah DOM siap
+      updateGuestName();
+
+      // Dengar perubahan hash dinamis tanpa reload halaman
+      window.addEventListener('hashchange', updateGuestName);
+    });
   </script>
 </body>
 
