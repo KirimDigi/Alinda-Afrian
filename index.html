@@ -41,11 +41,28 @@
       text-align: justify !important;
     }
 
-    /* Perkecil ukuran font nomor rekening di HP agar tidak tertutup tombol Salin */
+    /* Sesuaikan tata letak kolom bank card di HP agar nomor rekening tidak tertutup tombol Salin */
     @media (max-width: 480px) {
+      /* Lebarkan kolom nomor rekening (kiri) dan persempit kolom tombol Salin (kanan) */
+      .elementor-element-4aa7fb1 {
+        grid-template-columns: 72% 28% !important;
+      }
+      /* Geser container tombol Salin ke paling kanan */
+      .elementor-element-1e7cc4f {
+        display: flex !important;
+        justify-content: flex-end !important;
+      }
+      /* Rampingkan/perkecil kotak abu-abu tombol Salin */
+      .elementor-element-1e7cc4f .elementor-button {
+        padding: 6px 10px !important;
+        font-size: 12px !important;
+        width: auto !important;
+        margin-left: auto !important;
+      }
+      /* Sesuaikan ukuran font nomor rekening */
       .elementor-element-f9687e0 .elementor-heading-title {
-        font-size: 14px !important;
-        letter-spacing: 0.5px !important;
+        font-size: 15px !important;
+        letter-spacing: 0px !important;
       }
     }
 
